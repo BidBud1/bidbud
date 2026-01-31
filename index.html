@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BidBud | The Glassy Card Market</title>
+    <style>
+        /* The vibrant purple background */
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at top left, #6b21a8, #1e1b4b);
+            background-attachment: fixed;
+            color: white;
+        }
+
+        /* --- THE GLASSY PURPLE LOGO --- */
+        .logo-container {
+            margin-top: 50px;
+            padding: 20px 40px;
+            
+            /* Purple Glass Effect */
+            background: rgba(139, 92, 246, 0.2); /* Transparent Purple */
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            
+            /* White glowing border */
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            
+            /* Shadow to make it "float" */
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-text {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            /* Makes the icon look like a small card */
+            transform: rotate(-10deg);
+        }
+
+        /* --- THE POSTING BOX --- */
+        .post-box {
+            margin-top: 40px;
+            width: 90%;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 30px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 10px;
+            background: white;
+            color: #4c1d95;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.02);
+            background: #ddd;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="logo-container">
+        <div class="logo-icon"></div>
+        <span class="logo-text">BidBud</span>
+    </div>
+
+    <div class="post-box">
+        <h2 style="text-align: center;">What are you looking for?</h2>
+        
+        <label>Category</label>
+        <select>
+            <option>Pokémon</option>
+            <option>Sports (NFL/NBA/MLB)</option>
+            <option>Magic: The Gathering</option>
+        </select>
+
+        <label>Card Name</label>
+        <input type="text" placeholder="e.g. Base Set Charizard">
+
+        <label>Minimum PSA Grade</label>
+        <select>
+            <option>PSA 10 (Gem Mint)</option>
+            <option>PSA 9 (Mint)</option>
+            <option>PSA 8 (Near Mint-Mint)</option>
+            <option>Any Grade</option>
+        </select>
+
+        <label>Maximum Price ($)</label>
+        <input type="number" placeholder="500">
+
+        <button>Post "WANT" Listing</button>
+    </div>
+
+</body>
+</html>
