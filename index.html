@@ -2,136 +2,147 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>BidBud | The Glassy Card Market</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>trading cards done right.</title>
     <style>
-        /* The vibrant purple background */
-        body {
+        /* Modern, clean reset */
+        * {
             margin: 0;
             padding: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-family: 'Inter', sans-serif;
-            background: radial-gradient(circle at top left, #6b21a8, #1e1b4b);
-            background-attachment: fixed;
-            color: white;
+            box-sizing: border-box;
         }
 
-        /* --- THE GLASSY PURPLE LOGO --- */
-        .logo-container {
-            margin-top: 50px;
-            padding: 20px 40px;
-            
-            /* Purple Glass Effect */
-            background: rgba(139, 92, 246, 0.2); /* Transparent Purple */
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            
-            /* White glowing border */
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 20px;
-            
-            /* Shadow to make it "float" */
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-            
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background: #0a0a0c; /* Deep, near-black matte */
+            /* Subtle background glow to show off the glass */
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(76, 29, 149, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(30, 58, 138, 0.15) 0%, transparent 40%);
+            color: white;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- THE TRANSPARENT TOP BAR --- */
+        nav {
+            width: 100%;
+            height: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 60px;
+            position: fixed;
+            top: 0;
+            z-index: 100;
+            /* Ultra-thin glass line at bottom */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.01);
+            backdrop-filter: blur(10px);
+        }
+
+        .left-nav {
             display: flex;
             align-items: center;
             gap: 15px;
         }
 
-        .logo-text {
-            font-size: 2.5rem;
-            font-weight: 800;
+        /* The Logo Placeholder */
+        .logo-box {
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 6px;
+        }
+
+        .brand-name {
+            font-size: 22px;
+            font-weight: 700;
             letter-spacing: -1px;
-            color: #ffffff;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: white;
-            border-radius: 8px;
-            /* Makes the icon look like a small card */
-            transform: rotate(-10deg);
+        .brand-name span {
+            font-weight: 200;
+            opacity: 0.7;
         }
 
-        /* --- THE POSTING BOX --- */
-        .post-box {
-            margin-top: 40px;
-            width: 90%;
-            max-width: 500px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 25px;
-            padding: 30px;
+        .right-nav {
+            display: flex;
+            gap: 30px;
+            align-items: center;
         }
 
-        input, select {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            box-sizing: border-box;
-        }
-
-        button {
-            width: 100%;
-            padding: 15px;
-            margin-top: 20px;
-            border: none;
-            border-radius: 10px;
-            background: white;
-            color: #4c1d95;
-            font-weight: bold;
-            cursor: pointer;
+        .nav-link {
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            font-weight: 400;
             transition: 0.3s;
         }
 
-        button:hover {
-            transform: scale(1.02);
-            background: #ddd;
+        .nav-link:hover {
+            color: white;
         }
+
+        /* The Profile 'Glass' Button */
+        .profile-btn {
+            padding: 8px 20px;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        /* --- THE MAIN SLOGAN --- */
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .hero-text {
+            font-size: 80px; /* Big and bold */
+            font-weight: 700;
+            letter-spacing: -4px;
+            color: rgba(255, 255, 255, 0.9);
+            /* Soft glow so it doesn't look flat */
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+            max-width: 800px;
+            line-height: 0.9;
+        }
+
+        /* Subtle animation to make it feel "alive" */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-text {
+            animation: fadeIn 1.2s ease-out;
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="logo-container">
-        <div class="logo-icon"></div>
-        <span class="logo-text">BidBud</span>
-    </div>
+    <nav>
+        <div class="left-nav">
+            <div class="logo-box"></div>
+            <div class="brand-name">bid<span>BUD</span></div>
+        </div>
+        <div class="right-nav">
+            <a href="settings.html" class="nav-link">settings</a>
+            <a href="profile.html" class="nav-link profile-btn">profile</a>
+        </div>
+    </nav>
 
-    <div class="post-box">
-        <h2 style="text-align: center;">What are you looking for?</h2>
-        
-        <label>Category</label>
-        <select>
-            <option>Pokémon</option>
-            <option>Sports (NFL/NBA/MLB)</option>
-            <option>Magic: The Gathering</option>
-        </select>
-
-        <label>Card Name</label>
-        <input type="text" placeholder="e.g. Base Set Charizard">
-
-        <label>Minimum PSA Grade</label>
-        <select>
-            <option>PSA 10 (Gem Mint)</option>
-            <option>PSA 9 (Mint)</option>
-            <option>PSA 8 (Near Mint-Mint)</option>
-            <option>Any Grade</option>
-        </select>
-
-        <label>Maximum Price ($)</label>
-        <input type="number" placeholder="500">
-
-        <button>Post "WANT" Listing</button>
-    </div>
+    <main>
+        <h1 class="hero-text">trading cards<br>done right.</h1>
+    </main>
 
 </body>
 </html>
