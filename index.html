@@ -7,26 +7,20 @@
     <style>
         /* --- THEME VARIABLES --- */
         :root {
-            /* Dark Mode (Default) */
             --bg-color: #050a15;
             --text-color: #ffffff;
             --accent-blue: #3b82f6;
             --nav-bg: rgba(255, 255, 255, 0.01);
             --glass-border: rgba(255, 255, 255, 0.08);
-            --glow-1: rgba(59, 130, 246, 0.15);
-            --glow-2: rgba(30, 64, 175, 0.1);
             --logo-main: #ffffff;
         }
 
         [data-theme="light"] {
-            /* Light Mode - Now with Light Blue Ambient Glow */
             --bg-color: #f8fafc;
             --text-color: #050a15;
             --accent-blue: #2563eb;
             --nav-bg: rgba(255, 255, 255, 0.3);
             --glass-border: rgba(0, 0, 0, 0.05);
-            --glow-1: rgba(186, 230, 253, 0.6); /* Sky Blue Glow */
-            --glow-2: rgba(219, 234, 254, 0.5); /* Soft Blue Glow */
             --logo-main: #050a15;
         }
 
@@ -36,7 +30,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-            transition: background-color 0.5s ease, color 0.5s ease, border 0.5s ease;
+            transition: background-color 0.5s ease, color 0.5s ease;
         }
 
         body {
@@ -49,20 +43,36 @@
             position: relative;
         }
 
-        /* --- THE AMBIENT GLOW --- */
-        .ambient-glow {
+        /* --- THE AMBIENT GLOWS --- */
+        .glow {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: 0;
-            background: 
-                radial-gradient(circle at 15% 50%, var(--glow-1) 0%, transparent 50%),
-                radial-gradient(circle at 85% 30%, var(--glow-2) 0%, transparent 50%);
             pointer-events: none;
-            transition: background 0.5s ease;
+            transition: opacity 0.8s ease;
         }
+
+        /* Dark Mode Blue Glow */
+        .dark-glow {
+            background: 
+                radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(30, 64, 175, 0.1) 0%, transparent 50%);
+            opacity: 1;
+        }
+
+        /* Light Mode Sky Blue Glow */
+        .light-glow {
+            background: 
+                radial-gradient(circle at 15% 50%, rgba(186, 230, 253, 0.8) 0%, transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(219, 234, 254, 0.7) 0%, transparent 50%);
+            opacity: 0;
+        }
+
+        [data-theme="light"] .dark-glow { opacity: 0; }
+        [data-theme="light"] .light-glow { opacity: 1; }
 
         /* --- NAVIGATION --- */
         nav {
@@ -111,7 +121,6 @@
             justify-content: center;
             font-size: 11px;
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         [data-theme="light"] .toggle-circle {
@@ -206,7 +215,8 @@
 </head>
 <body data-theme="dark">
 
-    <div class="ambient-glow"></div>
+    <div class="glow dark-glow"></div>
+    <div class="glow light-glow"></div>
 
     <nav>
         <div class="nav-left">
