@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - bidBUD</title>
+    <link rel="icon" type="image/webp" href="image.webp">
+    <style>
+        :root {
+            --bg-color: #020617;
+            --text-color: #ffffff;
+            --accent-blue: #0052cc;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --input-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* --- AMBIENT GLOWS (Matching index.html) --- */
+        .glow-container { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+        .glow { position: absolute; width: 60vw; height: 60vw; border-radius: 50%; filter: blur(120px); opacity: 0.15; }
+        .glow-1 { top: -10%; left: -10%; background: radial-gradient(circle, var(--accent-blue) 0%, transparent 70%); }
+        .glow-2 { bottom: -10%; right: -10%; background: radial-gradient(circle, #3b82f6 0%, transparent 70%); }
+
+        /* --- LOGIN CARD --- */
+        .login-card {
+            width: 100%;
+            max-width: 400px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(40px) saturate(150%);
+            -webkit-backdrop-filter: blur(40px) saturate(150%);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            z-index: 1;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; letter-spacing: -1px; }
+        p.subtitle { font-size: 14px; opacity: 0.6; margin-bottom: 32px; }
+
+        /* --- INPUTS --- */
+        .input-group { text-align: left; margin-bottom: 20px; }
+        label { display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; opacity: 0.8; }
+        input {
+            width: 100%;
+            padding: 14px 18px;
+            background: var(--input-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: white;
+            font-size: 15px;
+            transition: 0.3s;
+            outline: none;
+        }
+        input:focus { border-color: var(--accent-blue); background: rgba(0, 82, 204, 0.05); box-shadow: 0 0 0 4px rgba(0, 82, 204, 0.1); }
+
+        /* --- BUTTONS --- */
+        .signin-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+        .signin-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px -5px rgba(0, 82, 204, 0.5); }
+
+        .divider { display: flex; align-items: center; margin: 24px 0; opacity: 0.3; font-size: 12px; }
+        .divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: white; margin: 0 10px; }
+
+        /* Google Button */
+        .google-btn {
+            width: 100%;
+            padding: 12px;
+            background: white;
+            color: #1f1f1f;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .google-btn:hover { background: #f1f1f1; transform: translateY(-2px); }
+
+        /* Footer Link */
+        .footer-text { margin-top: 32px; font-size: 14px; opacity: 0.7; }
+        .footer-text a { color: var(--accent-blue); text-decoration: none; font-weight: 600; }
+        .footer-text a:hover { text-decoration: underline; }
+        
+        .logo-home { position: absolute; top: 40px; left: 40px; text-decoration: none; color: white; font-weight: 700; font-size: 20px; letter-spacing: -1px; }
+
+    </style>
+</head>
+<body>
+
+    <div class="glow-container">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+    </div>
+
+    <a href="index.html" class="logo-home">bidBUD</a>
+
+    <div class="login-card">
+        <h1>Welcome Back</h1>
+        <p class="subtitle">Enter your details to access your cards.</p>
+
+        <div class="input-group">
+            <label>Email Address</label>
+            <input type="email" placeholder="name@company.com" required>
+        </div>
+
+        <div class="input-group">
+            <label>Password</label>
+            <input type="password" placeholder="••••••••" required>
+        </div>
+
+        <button class="signin-btn">Sign In</button>
+
+        <div class="divider">OR</div>
+
+        <button class="google-btn">
+            <svg width="18" height="18" viewBox="0 0 18 18">
+                <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/>
+                <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/>
+                <path fill="#FBBC05" d="M3.964 10.707c-.18-.54-.282-1.117-.282-1.707s.102-1.167.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z"/>
+                <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.582C13.463.891 11.426 0 9 0 5.483 0 2.443 2.049.957 4.961L3.964 7.294C4.672 5.167 6.656 3.58 9 3.58z"/>
+            </svg>
+            Sign In with Google
+        </button>
+
+        <p class="footer-text">
+            Don't have an account? <a href="signup.html">Sign Up</a>
+        </p>
+    </div>
+
+</body>
+</html>
