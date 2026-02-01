@@ -9,23 +9,26 @@
 
     <style>
         :root {
-            /* Refined Deep Dark Mode */
+            /* Dark Mode - Midnight Navy */
             --bg-color: #020617;
             --text-color: #ffffff;
-            --accent-blue: #0052cc; /* Less neon, more royal */
+            --accent-blue: #0052cc;
             --nav-bg: rgba(255, 255, 255, 0.02);
             --glass-border: rgba(255, 255, 255, 0.06);
             --glass-blur: blur(40px) saturate(150%);
-            --glow-color: rgba(37, 99, 235, 0.12); /* Subtle aura */
+            --glow-1-color: rgba(37, 99, 235, 0.12); /* Subtle Deep Blue */
+            --glow-2-color: rgba(30, 64, 175, 0.08);
         }
 
         [data-theme="light"] {
-            --bg-color: #f8fafc;
+            /* Light Mode - Restored Blue Ambience */
+            --bg-color: #f0f7ff;
             --text-color: #0f172a;
             --accent-blue: #0052cc;
-            --nav-bg: rgba(255, 255, 255, 0.4);
-            --glass-border: rgba(0, 82, 204, 0.08);
-            --glow-color: rgba(186, 230, 253, 0.6);
+            --nav-bg: rgba(255, 255, 255, 0.5);
+            --glass-border: rgba(0, 82, 204, 0.1);
+            --glow-1-color: rgba(59, 130, 246, 0.35); /* Vibrant Sky Blue */
+            --glow-2-color: rgba(186, 230, 253, 0.7);
         }
 
         * {
@@ -46,7 +49,7 @@
             position: relative;
         }
 
-        /* --- SUBTLE ATMOSPHERE --- */
+        /* --- THE RESTORED AMBIENT ATMOSPHERE --- */
         .glow-container {
             position: absolute;
             inset: 0;
@@ -55,13 +58,21 @@
         }
         .glow {
             position: absolute;
-            width: 70vw; height: 70vw;
+            width: 75vw; height: 75vw;
             border-radius: 50%;
             filter: blur(100px);
-            background: radial-gradient(circle, var(--glow-color) 0%, transparent 70%);
+            transition: background 0.6s ease, opacity 0.6s ease;
         }
-        .glow-1 { top: -25%; left: -15%; opacity: 0.8; }
-        .glow-2 { bottom: -25%; right: -15%; opacity: 0.5; }
+        .glow-1 { 
+            top: -20%; left: -15%; 
+            background: radial-gradient(circle, var(--glow-1-color) 0%, transparent 70%);
+            opacity: 0.8;
+        }
+        .glow-2 { 
+            bottom: -20%; right: -15%; 
+            background: radial-gradient(circle, var(--glow-2-color) 0%, transparent 70%);
+            opacity: 0.6;
+        }
 
         /* --- NAVIGATION --- */
         nav {
@@ -91,9 +102,8 @@
             opacity: 0.7;
             transition: 0.2s ease;
         }
-        .login-link:hover { opacity: 1; background: rgba(255,255,255,0.05); }
+        .login-link:hover { opacity: 1; background: rgba(255,255,255,0.08); }
 
-        /* Fixed Sign Up Button (No Glitch) */
         .signup-btn {
             background: var(--accent-blue);
             color: white;
@@ -106,21 +116,18 @@
             align-items: center;
             gap: 10px;
             box-shadow: 0 8px 20px -4px rgba(0, 82, 204, 0.3);
-            /* Set a stable transform baseline */
             transform: translateZ(0); 
-            transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.25s ease;
-            will-change: transform;
+            transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.2s ease;
         }
         
         .signup-btn:hover {
-            transform: translateY(-2px); /* Simple, stable movement */
+            transform: translateY(-2px);
             box-shadow: 0 12px 24px -4px rgba(0, 82, 204, 0.5);
         }
 
-        .signup-btn svg { transition: transform 0.25s ease; }
+        .signup-btn svg { transition: transform 0.2s ease; }
         .signup-btn:hover svg { transform: translateX(3px); }
 
-        /* Toggle */
         .theme-toggle {
             width: 50px; height: 26px; background: rgba(255,255,255,0.05);
             border: 1px solid var(--glass-border); border-radius: 50px;
@@ -139,7 +146,6 @@
             font-size: clamp(48px, 12vw, 110px);
             font-weight: 700; letter-spacing: -6px; line-height: 0.85;
             text-align: center;
-            padding: 0 20px;
         }
     </style>
 </head>
