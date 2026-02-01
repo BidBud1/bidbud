@@ -4,19 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>bidBUD</title>
+    
+    <link rel="icon" type="image/webp" href="favicon.webp">
+
     <style>
-        /* --- THEME VARIABLES --- */
         :root {
             /* Dark Mode */
-            --bg-color: #050a15;
+            --bg-color: #030712;
             --text-color: #ffffff;
-            --accent-blue: #3b82f6;
-            --nav-bg: rgba(255, 255, 255, 0.01);
+            --accent-blue: #0066ff;
+            --nav-bg: rgba(255, 255, 255, 0.02);
             --glass-border: rgba(255, 255, 255, 0.08);
             --logo-main: #ffffff;
-            /* Soft Shadows for Dark Mode (Glows) */
-            --text-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
-            --box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+            /* High-End Glass: Blur + Saturation */
+            --glass-blur: blur(40px) saturate(180%);
+            --text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         [data-theme="light"] {
@@ -27,18 +29,15 @@
             --nav-bg: rgba(255, 255, 255, 0.4);
             --glass-border: rgba(0, 102, 255, 0.1);
             --logo-main: #051937;
-            /* Soft Shadows for Light Mode (Floating Depth) */
-            --text-shadow: 0 15px 30px rgba(0, 60, 255, 0.1);
-            --box-shadow: 0 20px 40px -10px rgba(186, 230, 253, 0.8);
+            --text-shadow: 0 10px 30px rgba(0, 60, 255, 0.05);
         }
 
-        /* Modern Reset */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-            transition: all 0.5s ease;
+            transition: background-color 0.5s ease, color 0.5s ease;
         }
 
         body {
@@ -51,159 +50,129 @@
             position: relative;
         }
 
-        /* --- THE AMBIENT GLOWS --- */
+        /* --- AMBIENT GLOWS --- */
+        .glow-container {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
         .glow {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-            transition: opacity 0.8s ease;
+            width: 70vw; height: 70vw;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.4;
         }
-
-        .dark-glow {
-            background: 
-                radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 85% 30%, rgba(30, 64, 175, 0.1) 0%, transparent 50%);
-            opacity: 1;
-        }
-
-        .light-glow {
-            background: 
-                radial-gradient(circle at 10% 40%, rgba(59, 130, 246, 0.3) 0%, transparent 60%),
-                radial-gradient(circle at 90% 20%, rgba(186, 230, 253, 0.9) 0%, transparent 50%);
-            opacity: 0;
-        }
-
-        [data-theme="light"] .dark-glow { opacity: 0; }
-        [data-theme="light"] .light-glow { opacity: 1; }
+        .glow-1 { top: -20%; left: -10%; background: radial-gradient(circle, var(--accent-blue) 0%, transparent 70%); }
+        .glow-2 { bottom: -20%; right: -10%; background: radial-gradient(circle, #3b82f6 0%, transparent 70%); }
 
         /* --- NAVIGATION --- */
         nav {
             position: fixed;
-            top: 0;
-            width: 100%;
-            height: 80px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 40px;
+            top: 0; width: 100%; height: 90px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 50px;
             background: var(--nav-bg);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
             border-bottom: 1px solid var(--glass-border);
             z-index: 1000;
         }
 
         .nav-left { display: flex; align-items: center; gap: 20px; }
+        .brand-text { font-size: 24px; font-weight: 700; letter-spacing: -1.8px; }
         
+        .nav-right { display: flex; gap: 15px; align-items: center; }
+
+        /* Login Button (Ghost Glass) */
+        .login-link {
+            text-decoration: none;
+            color: var(--text-color);
+            font-size: 14px;
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 50px;
+            transition: 0.3s;
+        }
+        .login-link:hover { background: rgba(255,255,255,0.05); }
+
+        /* Sign Up Button (Big & Vibrant) */
+        .signup-btn {
+            background: var(--accent-blue);
+            color: white;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 700;
+            padding: 16px 32px; /* Slightly bigger */
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 10px 25px -5px rgba(0, 102, 255, 0.4);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s;
+        }
+        
+        .signup-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 20px 40px -10px rgba(0, 102, 255, 0.6);
+        }
+
+        .signup-btn svg { transition: transform 0.3s ease; }
+        .signup-btn:hover svg { transform: translateX(5px); }
+
+        /* Theme Toggle */
         .theme-toggle {
-            width: 55px; height: 28px; background: var(--glass-border);
-            border-radius: 50px; display: flex; align-items: center;
-            padding: 4px; cursor: pointer; border: 1px solid var(--glass-border);
-            /* Soft Shadow on Toggle */
-            box-shadow: var(--box-shadow);
+            width: 55px; height: 28px; background: rgba(255,255,255,0.05);
+            border: 1px solid var(--glass-border); border-radius: 50px;
+            display: flex; align-items: center; padding: 4px; cursor: pointer;
         }
         .toggle-circle {
             width: 20px; height: 20px; background: var(--text-color);
-            border-radius: 50%; display: flex; align-items: center;
-            justify-content: center; font-size: 11px;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 11px; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         [data-theme="light"] .toggle-circle { transform: translateX(25px); }
 
-        .logo-container { position: relative; width: 32px; height: 32px; }
-        .logo-card { position: absolute; width: 20px; height: 28px; border-radius: 4px; border: 1px solid var(--glass-border); }
-        .card-1 { background: var(--logo-main); z-index: 3; left: 0; top: 2px; }
-        .card-2 { background: var(--accent-blue); opacity: 0.6; z-index: 2; left: 6px; top: 0px; }
-        .card-3 { background: var(--accent-blue); opacity: 0.3; z-index: 1; left: 12px; top: -2px; }
-
-        .brand-text { font-size: 22px; font-weight: 700; letter-spacing: -1.5px; }
-
-        .nav-right { display: flex; gap: 40px; align-items: center; }
-        .nav-item { text-decoration: none; color: var(--text-color); opacity: 0.6; font-size: 14px; font-weight: 500; }
-        .nav-item:hover { opacity: 1; }
-
-        .profile-btn {
-            padding: 10px 24px;
-            background: var(--glass-border);
-            border: 1px solid var(--glass-border);
-            border-radius: 50px;
-            color: var(--text-color);
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            /* Soft Shadow on Button */
-            box-shadow: var(--box-shadow);
-        }
-
-        /* --- CONTENT --- */
-        main {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 1;
-            text-align: center;
-        }
-
-        .beta-tag {
-            display: inline-block;
-            padding: 6px 16px;
-            background: rgba(0, 102, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
-            border-radius: 100px;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            color: var(--accent-blue);
-            margin-bottom: 24px;
-            text-transform: uppercase;
-            /* Soft Shadow making it float */
-            box-shadow: var(--box-shadow);
-        }
-
+        /* --- HERO --- */
+        main { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1; }
         .slogan {
-            font-size: clamp(48px, 10vw, 110px);
-            font-weight: 700;
-            letter-spacing: -6px;
-            line-height: 0.85;
-            color: var(--text-color);
-            /* The Soft Text Shadow */
+            font-size: clamp(50px, 12vw, 115px);
+            font-weight: 700; letter-spacing: -7px; line-height: 0.8;
+            text-align: center;
             text-shadow: var(--text-shadow);
         }
     </style>
 </head>
 <body data-theme="dark">
 
-    <div class="glow dark-glow"></div>
-    <div class="glow light-glow"></div>
+    <div class="glow-container">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+    </div>
 
     <nav>
         <div class="nav-left">
-            <div class="logo-container">
-                <div class="logo-card card-3"></div>
-                <div class="logo-card card-2"></div>
-                <div class="logo-card card-1"></div>
-            </div>
-            <div class="brand-text">bid<span>BUD</span></div>
-            
-            <div class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">
+            <div class="brand-text">bidBUD</div>
+            <div class="theme-toggle" onclick="toggleTheme()">
                 <div class="toggle-circle" id="toggle-icon">🌙</div>
             </div>
         </div>
+        
         <div class="nav-right">
-            <a href="settings.html" class="nav-item">settings</a>
-            <a href="profile.html" class="nav-item profile-btn">profile</a>
+            <a href="profile.html" class="login-link">Login</a>
+            <a href="profile.html" class="signup-btn">
+                Sign Up
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </a>
         </div>
     </nav>
 
     <main>
-        <div class="beta-tag">beta: expect bugs</div>
         <h1 class="slogan">trading cards<br>done right.</h1>
     </main>
 
@@ -211,14 +180,9 @@
         function toggleTheme() {
             const body = document.body;
             const icon = document.getElementById('toggle-icon');
-            
-            if (body.getAttribute('data-theme') === 'dark') {
-                body.setAttribute('data-theme', 'light');
-                icon.innerText = '☀️';
-            } else {
-                body.setAttribute('data-theme', 'dark');
-                icon.innerText = '🌙';
-            }
+            const isDark = body.getAttribute('data-theme') === 'dark';
+            body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+            icon.innerText = isDark ? '☀️' : '🌙';
         }
     </script>
 </body>
