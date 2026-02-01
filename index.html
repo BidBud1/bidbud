@@ -58,20 +58,10 @@
             z-index: 1000;
         }
 
-        .nav-left { display: flex; align-items: center; gap: 30px; }
-        .brand-text { font-size: 24px; font-weight: 700; letter-spacing: -1.8px; margin-right: 10px; }
+        .nav-left { display: flex; align-items: center; gap: 20px; }
+        .brand-text { font-size: 24px; font-weight: 700; letter-spacing: -1.8px; }
         
-        .catalog-link {
-            text-decoration: none;
-            color: var(--text-color);
-            font-size: 14px;
-            font-weight: 500;
-            opacity: 0.6;
-            transition: 0.2s;
-        }
-        .catalog-link:hover { opacity: 1; }
-
-        .nav-right { display: flex; gap: 12px; align-items: center; }
+        .nav-right { display: flex; gap: 20px; align-items: center; }
 
         /* Auth Buttons */
         .auth-ui { display: flex; gap: 12px; align-items: center; }
@@ -85,33 +75,58 @@
         }
         .signup-btn:hover { transform: translateY(-2px); }
 
-        /* Logged In UI (Hidden by default) */
-        .user-ui { display: none; gap: 15px; align-items: center; }
+        /* Logged In UI */
+        .user-ui { display: none; gap: 20px; align-items: center; }
+        
+        .catalog-btn {
+            text-decoration: none;
+            color: var(--text-color);
+            font-size: 14px;
+            font-weight: 500;
+            opacity: 0.7;
+            transition: 0.2s;
+        }
+        .catalog-btn:hover { opacity: 1; }
+
         .profile-pic {
             width: 38px; height: 38px;
             border-radius: 50%;
             border: 2px solid var(--glass-border);
             object-fit: cover;
-            cursor: pointer;
         }
         .settings-icon {
             color: var(--text-color);
             opacity: 0.6;
-            cursor: pointer;
             transition: 0.3s;
+            display: flex; align-items: center;
         }
         .settings-icon:hover { opacity: 1; transform: rotate(45deg); }
 
-        /* Toggle */
-        .theme-toggle { width: 45px; height: 24px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 50px; display: flex; align-items: center; padding: 3px; cursor: pointer; margin-left: 10px;}
-        .toggle-circle { width: 16px; height: 16px; background: var(--text-color); border-radius: 50%; transition: transform 0.3s; }
-        [data-theme="light"] .toggle-circle { transform: translateX(21px); }
+        /* Theme Toggle with Icons */
+        .theme-toggle { 
+            width: 50px; height: 26px; 
+            background: rgba(255,255,255,0.05); 
+            border: 1px solid var(--glass-border); 
+            border-radius: 50px; 
+            display: flex; align-items: center; 
+            padding: 3px; cursor: pointer;
+            position: relative;
+        }
+        .toggle-circle { 
+            width: 20px; height: 20px; 
+            background: var(--text-color); 
+            border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center;
+            font-size: 11px;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 2;
+        }
+        [data-theme="light"] .toggle-circle { transform: translateX(24px); }
 
         main { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1; }
         .slogan { font-size: clamp(48px, 12vw, 110px); font-weight: 700; letter-spacing: -6px; line-height: 0.85; text-align: center; }
 
-        /* Demo Button for you to test */
-        .test-login { position: fixed; bottom: 20px; left: 20px; padding: 10px; font-size: 10px; background: rgba(255,255,255,0.1); color: white; border: none; cursor: pointer; z-index: 2000; border-radius: 5px; }
+        .test-login { position: fixed; bottom: 20px; left: 20px; padding: 10px; font-size: 10px; background: rgba(255,255,255,0.1); color: var(--text-color); border: none; cursor: pointer; z-index: 2000; border-radius: 5px; }
     </style>
 </head>
 <body data-theme="dark">
@@ -124,9 +139,8 @@
     <nav>
         <div class="nav-left">
             <div class="brand-text">bidBUD</div>
-            <a href="catalog.html" class="catalog-link">Catalog</a>
             <div class="theme-toggle" onclick="toggleTheme()">
-                <div class="toggle-circle"></div>
+                <div class="toggle-circle" id="toggle-icon">🌙</div>
             </div>
         </div>
         
@@ -137,8 +151,9 @@
             </div>
 
             <div class="user-ui" id="userUI">
+                <a href="catalog.html" class="catalog-btn">Catalog</a>
                 <a href="settings.html" class="settings-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="3"></circle>
                         <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
                     </svg>
@@ -159,21 +174,18 @@
     <script>
         function toggleTheme() {
             const body = document.body;
+            const icon = document.getElementById('toggle-icon');
             const isDark = body.getAttribute('data-theme') === 'dark';
             body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+            icon.innerText = isDark ? '☀️' : '🌙';
         }
 
-        // Vibe Coding Logic: Toggle UI visibility
         function simulateLogin() {
             const auth = document.getElementById('authUI');
             const user = document.getElementById('userUI');
-            if (auth.style.display === 'none') {
-                auth.style.display = 'flex';
-                user.style.display = 'none';
-            } else {
-                auth.style.display = 'none';
-                user.style.display = 'flex';
-            }
+            const isVisible = user.style.display === 'flex';
+            auth.style.display = isVisible ? 'flex' : 'none';
+            user.style.display = isVisible ? 'none' : 'flex';
         }
     </script>
 </body>
