@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>bidbud | trading cards done right.</title>
+    <title>bidBUD</title>
     <style>
         /* --- THEME VARIABLES --- */
         :root {
@@ -14,16 +14,22 @@
             --nav-bg: rgba(255, 255, 255, 0.01);
             --glass-border: rgba(255, 255, 255, 0.08);
             --logo-main: #ffffff;
+            /* Soft Shadows for Dark Mode (Glows) */
+            --text-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+            --box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
         }
 
         [data-theme="light"] {
-            /* Light Mode - Intensified Blue */
-            --bg-color: #f0f7ff; /* Soft Blue-Tinted White */
+            /* Light Mode */
+            --bg-color: #f0f7ff;
             --text-color: #051937;
             --accent-blue: #0066ff;
             --nav-bg: rgba(255, 255, 255, 0.4);
             --glass-border: rgba(0, 102, 255, 0.1);
             --logo-main: #051937;
+            /* Soft Shadows for Light Mode (Floating Depth) */
+            --text-shadow: 0 15px 30px rgba(0, 60, 255, 0.1);
+            --box-shadow: 0 20px 40px -10px rgba(186, 230, 253, 0.8);
         }
 
         /* Modern Reset */
@@ -32,7 +38,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-            transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
+            transition: all 0.5s ease;
         }
 
         body {
@@ -57,7 +63,6 @@
             transition: opacity 0.8s ease;
         }
 
-        /* Dark Mode Glow */
         .dark-glow {
             background: 
                 radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
@@ -65,12 +70,10 @@
             opacity: 1;
         }
 
-        /* Light Mode - Heavier Sky Blue Glows */
         .light-glow {
             background: 
                 radial-gradient(circle at 10% 40%, rgba(59, 130, 246, 0.3) 0%, transparent 60%),
-                radial-gradient(circle at 90% 20%, rgba(186, 230, 253, 0.9) 0%, transparent 50%),
-                radial-gradient(circle at 50% 80%, rgba(219, 234, 254, 0.8) 0%, transparent 50%);
+                radial-gradient(circle at 90% 20%, rgba(186, 230, 253, 0.9) 0%, transparent 50%);
             opacity: 0;
         }
 
@@ -94,80 +97,33 @@
             z-index: 1000;
         }
 
-        .nav-left {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        /* Theme Toggle UI */
+        .nav-left { display: flex; align-items: center; gap: 20px; }
+        
         .theme-toggle {
-            width: 55px;
-            height: 28px;
-            background: var(--glass-border);
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            padding: 4px;
-            cursor: pointer;
-            position: relative;
-            border: 1px solid var(--glass-border);
+            width: 55px; height: 28px; background: var(--glass-border);
+            border-radius: 50px; display: flex; align-items: center;
+            padding: 4px; cursor: pointer; border: 1px solid var(--glass-border);
+            /* Soft Shadow on Toggle */
+            box-shadow: var(--box-shadow);
         }
-
         .toggle-circle {
-            width: 20px;
-            height: 20px;
-            background: var(--text-color);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
+            width: 20px; height: 20px; background: var(--text-color);
+            border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; font-size: 11px;
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
+        [data-theme="light"] .toggle-circle { transform: translateX(25px); }
 
-        [data-theme="light"] .toggle-circle {
-            transform: translateX(25px);
-        }
-
-        /* Stacked Cards Logo */
-        .logo-container {
-            position: relative;
-            width: 32px;
-            height: 32px;
-        }
-        .logo-card {
-            position: absolute;
-            width: 20px;
-            height: 28px;
-            border-radius: 4px;
-            border: 1px solid var(--glass-border);
-        }
+        .logo-container { position: relative; width: 32px; height: 32px; }
+        .logo-card { position: absolute; width: 20px; height: 28px; border-radius: 4px; border: 1px solid var(--glass-border); }
         .card-1 { background: var(--logo-main); z-index: 3; left: 0; top: 2px; }
         .card-2 { background: var(--accent-blue); opacity: 0.6; z-index: 2; left: 6px; top: 0px; }
         .card-3 { background: var(--accent-blue); opacity: 0.3; z-index: 1; left: 12px; top: -2px; }
 
-        .brand-text {
-            font-size: 22px;
-            font-weight: 700;
-            letter-spacing: -1.5px;
-        }
+        .brand-text { font-size: 22px; font-weight: 700; letter-spacing: -1.5px; }
 
-        .nav-right {
-            display: flex;
-            gap: 40px;
-            align-items: center;
-        }
-
-        .nav-item {
-            text-decoration: none;
-            color: var(--text-color);
-            opacity: 0.6;
-            font-size: 14px;
-            font-weight: 500;
-            transition: 0.3s;
-        }
-
+        .nav-right { display: flex; gap: 40px; align-items: center; }
+        .nav-item { text-decoration: none; color: var(--text-color); opacity: 0.6; font-size: 14px; font-weight: 500; }
         .nav-item:hover { opacity: 1; }
 
         .profile-btn {
@@ -179,6 +135,8 @@
             text-decoration: none;
             font-size: 14px;
             font-weight: 500;
+            /* Soft Shadow on Button */
+            box-shadow: var(--box-shadow);
         }
 
         /* --- CONTENT --- */
@@ -195,9 +153,9 @@
         .beta-tag {
             display: inline-block;
             padding: 6px 16px;
-            background: rgba(0, 102, 255, 0.1);
+            background: rgba(0, 102, 255, 0.05);
             backdrop-filter: blur(10px);
-            border: 1px solid var(--accent-blue);
+            border: 1px solid var(--glass-border);
             border-radius: 100px;
             font-size: 11px;
             font-weight: 700;
@@ -205,6 +163,8 @@
             color: var(--accent-blue);
             margin-bottom: 24px;
             text-transform: uppercase;
+            /* Soft Shadow making it float */
+            box-shadow: var(--box-shadow);
         }
 
         .slogan {
@@ -213,6 +173,8 @@
             letter-spacing: -6px;
             line-height: 0.85;
             color: var(--text-color);
+            /* The Soft Text Shadow */
+            text-shadow: var(--text-shadow);
         }
     </style>
 </head>
