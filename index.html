@@ -23,7 +23,6 @@
             --text-color: #0f172a;
             --nav-bg: rgba(255, 255, 255, 0.5);
             --glass-border: rgba(0, 82, 204, 0.1);
-            --glow-1-color: rgba(59, 130, 246, 0.35);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
@@ -35,81 +34,86 @@
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
-            transition: background-color 0.4s;
         }
 
-        /* --- AMBIENT GLOWS --- */
+        /* --- BACKGROUND --- */
         .glow-container { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
         .glow { position: absolute; width: 75vw; height: 75vw; border-radius: 50%; filter: blur(100px); }
         .glow-1 { top: -20%; left: -15%; background: radial-gradient(circle, var(--glow-1-color) 0%, transparent 70%); }
 
-        /* --- NAVIGATION --- */
+        /* --- NAV --- */
         nav {
             position: fixed; top: 0; width: 100%; height: 85px;
             display: flex; justify-content: space-between; align-items: center;
             padding: 0 50px; background: var(--nav-bg); backdrop-filter: var(--glass-blur);
             border-bottom: 1px solid var(--glass-border); z-index: 1000;
         }
-        .brand-text { 
-            font-size: 24px; font-weight: 700; letter-spacing: -1.8px; 
-            text-shadow: 0 0 15px rgba(0, 82, 204, 0.3);
-        }
-        .nav-right { display: flex; gap: 20px; align-items: center; }
-        
+        .brand-text { font-size: 24px; font-weight: 700; letter-spacing: -1.8px; }
+
         /* --- HERO SECTION --- */
-        main { position: relative; padding-top: 160px; display: flex; flex-direction: column; align-items: center; z-index: 1; }
+        .hero-unit {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-top: 85px;
+            position: relative;
+            z-index: 1;
+        }
+
         .slogan { 
             font-size: clamp(45px, 11vw, 100px); font-weight: 700; letter-spacing: -6px; 
-            line-height: 0.85; text-align: center; margin-bottom: 20px;
+            line-height: 0.85; text-align: center; margin-bottom: 40px;
         }
 
-        /* --- LIVE TICKER --- */
-        .ticker-wrap {
-            width: 100%; overflow: hidden; height: 40px;
-            background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--glass-border);
-            display: flex; align-items: center; margin-bottom: 60px;
-        }
-        .ticker { display: flex; white-space: nowrap; animation: ticker 35s linear infinite; }
-        .ticker-item { padding: 0 40px; font-size: 13px; font-weight: 600; opacity: 0.6; }
-        .ticker-item span { color: #10b981; margin-left: 5px; }
-        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
-        /* THE HOLO CARD */
-        .card-container { perspective: 1000px; margin: 40px 0; }
+        /* HERO CARD */
+        .card-container { perspective: 1000px; margin-bottom: 60px; }
         .holo-card {
             width: 260px; height: 360px;
             background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.15);
-            position: relative;
-            overflow: hidden;
+            border-radius: 20px; border: 1px solid rgba(255,255,255,0.15);
+            position: relative; overflow: hidden;
             box-shadow: 0 40px 80px -15px rgba(0,0,0,0.6);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            transition: transform 0.1s ease-out;
-            will-change: transform;
         }
         .holo-card::after {
             content: ""; position: absolute; inset: 0;
             background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.1) 45%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.1) 55%, transparent 70%);
-            background-size: 200% 200%;
-            animation: shimmer 5s infinite linear;
+            background-size: 200% 200%; animation: shimmer 5s infinite linear;
         }
         @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
 
-        /* --- FEATURES --- */
+        /* --- THE TICKER BAR (The Divider) --- */
+        .ticker-wrap {
+            width: 100%; overflow: hidden; height: 45px;
+            background: rgba(255,255,255,0.03); 
+            border-top: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
+            display: flex; align-items: center;
+            backdrop-filter: blur(10px);
+        }
+        .ticker { display: flex; white-space: nowrap; animation: ticker 40s linear infinite; }
+        .ticker-item { padding: 0 40px; font-size: 11px; font-weight: 600; opacity: 0.3; letter-spacing: 1.5px; }
+        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* --- SCROLL CONTENT --- */
+        .content-section {
+            padding: 100px 40px;
+            display: flex; justify-content: center;
+            z-index: 1;
+        }
         .features {
             display: grid; grid-template-columns: repeat(3, 1fr);
             gap: 25px; width: 100%; max-width: 1200px;
-            padding: 80px 40px 150px 40px;
         }
         .feature-box {
             background: var(--nav-bg); backdrop-filter: var(--glass-blur);
             border: 1px solid var(--glass-border); border-radius: 28px;
-            padding: 40px; transition: 0.3s cubic-bezier(0.2, 0, 0, 1);
+            padding: 40px;
         }
-        .feature-box:hover { transform: translateY(-10px); border-color: rgba(255,255,255,0.2); }
-        .feature-box h3 { margin-bottom: 12px; font-size: 20px; font-weight: 700; }
-        .feature-box p { opacity: 0.5; font-size: 15px; line-height: 1.6; }
+        .feature-box h3 { margin-bottom: 12px; font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .feature-box p { opacity: 0.3; font-size: 14px; line-height: 1.6; }
 
     </style>
 </head>
@@ -119,55 +123,57 @@
 
     <nav>
         <div class="brand-text">bidBUD</div>
-        <div class="nav-right">
+        <div style="display: flex; gap: 20px; align-items: center;">
             <a href="login.html" style="text-decoration:none; color:inherit; font-size:14px; opacity:0.6;">Login</a>
             <a href="signup.html" style="background:var(--accent-blue); color:white; text-decoration:none; font-size:14px; font-weight:700; padding:12px 24px; border-radius:50px;">Sign Up</a>
         </div>
     </nav>
 
-    <main>
+    <div class="hero-unit">
         <h1 class="slogan">trading cards<br>done right.</h1>
-
-        <div class="ticker-wrap">
-            <div class="ticker">
-                <div class="ticker-item">Charizard Base Set <span>+2.4%</span></div>
-                <div class="ticker-item">LeBron James Rookie <span>+1.8%</span></div>
-                <div class="ticker-item">Black Lotus <span>+0.5%</span></div>
-                <div class="ticker-item">Pikachu Illustrator <span>+5.1%</span></div>
-                <div class="ticker-item">Charizard Base Set <span>+2.4%</span></div>
-                <div class="ticker-item">LeBron James Rookie <span>+1.8%</span></div>
-                <div class="ticker-item">Black Lotus <span>+0.5%</span></div>
-            </div>
-        </div>
         
         <div class="card-container">
             <div class="holo-card" id="card">
-                <div style="width:80%; height:60%; background:rgba(255,255,255,0.05); border-radius:10px; margin-bottom:20px;"></div>
-                <div style="width:60%; height:10px; background:rgba(255,255,255,0.1); border-radius:5px;"></div>
+                <div style="width:80%; height:55%; background:rgba(255,255,255,0.03); border-radius:12px; margin-bottom:25px;"></div>
+                <div style="width:40%; height:6px; background:rgba(255,255,255,0.1); border-radius:4px;"></div>
             </div>
         </div>
 
-        <div class="features">
-            <div class="feature-box">
-                <h3>Live Bidding</h3>
-                <p>Experience zero-latency auctions with our real-time trading engine.</p>
-            </div>
-            <div class="feature-box">
-                <h3>Secure Escrow</h3>
-                <p>Funds are released only once you've verified the card's condition.</p>
-            </div>
-            <div class="feature-box">
-                <h3>Market Logic</h3>
-                <p>Professional tools to track your collection's net worth in real-time.</p>
+        <div class="ticker-wrap">
+            <div class="ticker">
+                <div class="ticker-item">ASSET_PLACEHOLDER <span>0.00%</span></div>
+                <div class="ticker-item">ASSET_PLACEHOLDER <span>0.00%</span></div>
+                <div class="ticker-item">ASSET_PLACEHOLDER <span>0.00%</span></div>
+                <div class="ticker-item">ASSET_PLACEHOLDER <span>0.00%</span></div>
+                <div class="ticker-item">ASSET_PLACEHOLDER <span>0.00%</span></div>
+                <div class="ticker-item">ASSET_PLACEHOLDER <span>0.00%</span></div>
+                <div class="ticker-item">ASSET_PLACEHOLDER <span>0.00%</span></div>
             </div>
         </div>
-    </main>
+    </div>
+
+    <div class="content-section">
+        <div class="features">
+            <div class="feature-box">
+                <h3>FEATURE_01</h3>
+                <p>Detailed description placeholder for core app functionality.</p>
+            </div>
+            <div class="feature-box">
+                <h3>FEATURE_02</h3>
+                <p>Detailed description placeholder for core app functionality.</p>
+            </div>
+            <div class="feature-box">
+                <h3>FEATURE_03</h3>
+                <p>Detailed description placeholder for core app functionality.</p>
+            </div>
+        </div>
+    </div>
 
     <script>
         const card = document.getElementById('card');
         document.addEventListener('mousemove', (e) => {
-            const xAxis = (window.innerWidth / 2 - e.pageX) / 30;
-            const yAxis = (window.innerHeight / 2 - e.pageY) / 30;
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 40;
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 40;
             card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
         });
     </script>
